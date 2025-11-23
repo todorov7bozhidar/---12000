@@ -335,7 +335,7 @@ box-shadow: 0 0 10px #333;
 </div>  
 <button onclick="toggleSubmenu('olympiads')">Олимпиади</button>  <div id="olympiads" class="submenu">    
     <button onclick="openEFrame('https://docs.google.com/gview?url=https://www.regalia6.com/olimpiads/olimpiads_files/history/2010/ob6tinski/pazardjik/ist6kl.pdf&embedded=true')">Общински кръг 2010, 6 кл. (VII)</button>    
-    <button onclick="openEFrame('2011o_6kl_history_MOMN.pdf')">Областен кръг 2011, 6 кл. (VII)</button>    
+    <button onclick="openEFrame('olimpyada2.html')">Областен кръг 2011, 6 кл. (VII)</button>    
 </div>  <button onclick="showIframe('Geschichte.html')">Упражнение Олимпия</button>  
 <button onclick="showIframe('Личности.html')">Упражнение Елегия</button>  
 <button onclick="showIframe('Лауреат2.html')">Упражнение Лауреат</button>  
@@ -477,7 +477,9 @@ function showIframe(page) {
     }  
 }
     
-function openEFrame(url) { showIframe(url); }    
+function openEFrame(url) {
+    document.getElementById("iframe").src = url;
+}  
     
 function showLiterature() {    
 mainContent.style.display = 'none';    
