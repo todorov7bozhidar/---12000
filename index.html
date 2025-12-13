@@ -343,7 +343,8 @@ box-shadow: 0 0 10px #333;
 <button onclick="showIframe('Личности.html')">Упражнение Елегия</button>  
 <button onclick="showIframe('Лауреат2.html')">Упражнение Лауреат</button>  
 <button onclick="showIframe('Вестник.jpg')">Списък на възрожденската преса</button>  
-<button onclick="showLiterature()">Препоръчителна литература</button>  <!-- ===================== ДОБАВЕН НОВ БЛОК ===================== -->  <button onclick="toggleSubmenu('extras')">Допълнително</button>  <div id="extras" class="submenu">    
+<button onclick="showLiterature()">Препоръчителна литература</button>
+<button onclick="showCreators()">За създателите</button><!-- ===================== ДОБАВЕН НОВ БЛОК ===================== -->  <button onclick="toggleSubmenu('extras')">Допълнително</button>  <div id="extras" class="submenu">    
     <button onclick="showIframe('Понятия4.html')">Понятия</button>   
         <!-- НОВО: два датника за независимостите -->  
     <button onclick="toggleSubmenu('independence')">Исторически датници</button>  
@@ -423,6 +424,25 @@ box-shadow: 0 0 10px #333;
         <p class="question">При откриването на коя сграда княз Фердинанд е освиркан от студенти?</p>    
         <input type="text" id="answer" placeholder="Въведи отговора">    
         <button class="submit" onclick="checkAnswer()">Подай своя отговор</button>    
+    </div>  <div id="creators" style="display:none; line-height:1.6;">
+    <h2 style="text-align:center;">За създателите</h2>
+
+    <p><strong>Божидар Ат. Тодоров</strong><br>
+    Ученик в VIII "а" клас на ППМГ "Акад. Н. Обрешков", изявен хуманитарист с високи постижения в историческата на наука. Най-голямото от тях е първото му място на националния кръг на Националната олимпиада по История и цивилизации, проведен в град Варна през 2025-та година.</p>
+
+    <p><strong>Телефон:</strong> 0877016488<br>
+    <strong>Email:</strong> todorov.bozhidar905@gmail.com</p>
+
+    <img src="Нагр.jpg" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+
+    <p><strong>Янилия Т. Терпо</strong><br>
+    Ученик в IX "а" клас на ППМГ "Акад. Н. Обрешков", изявен хуманитарист с високи постижения в историческата наука. Най-голямото от тях е третото й място на националния кръг на Националната олимпиада по История и цивилизации, проведен в град Русе през 2024-та година.</p>
+
+    <p><strong>Телефон:</strong> 0893017388<br>
+    <strong>Email:</strong> qniterpo@gmail.com</p>
+
+    <img src="Нагр2.jpg" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+</div>   
     </div>  <div id="literature" style="display:none;">    
 <h2>Препоръчителна литература</h2>    
 <p>Павлов, Спасов — <em>300 неща от българската история, които всеки трябва да знае</em></p>    
@@ -504,6 +524,15 @@ iframeContainer.style.display = 'none';
 literature.style.display = 'none';    
 advice.style.display = 'block';    
 }    
+const creators = document.getElementById("creators");
+
+function showCreators() {
+    mainContent.style.display = 'none';
+    iframeContainer.style.display = 'none';
+    advice.style.display = 'none';
+    literature.style.display = 'none';
+    creators.style.display = 'block';
+}
     
 function checkAnswer() {    
 const input = document.getElementById('answer');    
@@ -519,7 +548,9 @@ input.style.backgroundColor = "#330000";
 /* ===================== Потребители / Логин ===================== */    
 const users = [    
 {name: "Русинова, Димитрина", role: "Учител", password: "DR1234"},    
-{name: "Тодоров, Божидар", role: "Учител", password: "BT2345"},    
+{name: "Тодоров, Божидар", role: "Учител", password: "BT2345"},  
+{name: "Терпо, Янилия", role: "Учител", password: "QT0123"}, 
+{name: "Попова, Алиса", role: "Учител", password: "AP0012"},  
 {name: "Манолов, Мартин", role: "Ученик", password: "MM3456"},    
 {name: "Стефанова, Велизара", role: "Ученик", password: "VS4567"},   
 {name: "Топалски, Борис", role: "Ученик", password: "BT5678"},
