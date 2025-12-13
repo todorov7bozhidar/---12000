@@ -61,6 +61,47 @@ overflow-x: hidden;
 scrollbar-width: thin;
 scrollbar-color: #900 #111;
 }
+#profile-btn {
+    position: fixed;
+    top: 60px;
+    right: 15px;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 8px;
+    border: 2px solid #444;
+    background-color: #222;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#profile-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+#profilePanel {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    width: 260px;
+    background: #111;
+    border: 2px solid #900;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    z-index: 2000;
+    box-shadow: 0 0 15px black;
+}
+
+#profilePanel img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
 
 nav::-webkit-scrollbar {
 width: 8px;
@@ -251,7 +292,10 @@ box-shadow: 0 0 10px #333;
     <button class="btn" onclick="login()">Подай</button>    
     <div id="error" class="error"></div>    
 </div>  <!-- ===================== Основен сайт ===================== -->  <div id="siteContent" style="display:none;">    
-    <button id="menu-btn">☰</button>    
+    <button id="menu-btn">☰</button> 
+    <button id="profile-btn">
+    <img id="profile-avatar" src="default.jpg" alt="profile">
+    </button>
     <header>Под знака на Клио<br><small>Vive l'histoire</small></header>  <nav id="sidebar">  <button onclick="showIframe('index.html')">Начало</button>    <button onclick="toggleSubmenu('plan')">План-конспекти</button>
 
 <div id="plan" class="submenu">    
@@ -503,7 +547,14 @@ box-shadow: 0 0 10px #333;
 
 </div>  
 <div id="userList" class="user-list"></div>    
-</main>    
+</main>   
+<div id="profilePanel" style="display:none;">
+    <img id="panelAvatar">
+    <h3 id="panelName"></h3>
+    <p id="panelRole"></p>
+    <p id="panelPass"></p>
+    <p id="panelBio"></p>
+</div>
 </div>    <!-- ========================================================= -->  <!-- 1) Тук поставяш Firebase SDK (ПЪРВИЯ КОД) -->  <!-- ========================================================= -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>  <!-- ========================================================= -->  <!-- 2) Тук поставяш firebaseConfig + initializeApp (ВТОРИЯ КОД) -->  <!-- ========================================================= -->  <script>  
   const firebaseConfig = {  
     apiKey: "AIzaSyAlXNYVqf4X8ln8fkuRs_LiyH2s6hdUAWc",  
@@ -597,9 +648,30 @@ input.style.backgroundColor = "#330000";
     
 /* ===================== Потребители / Логин ===================== */    
 const users = [    
-{name: "Русинова, Димитрина", role: "Учител", password: "DR1234"},    
-{name: "Тодоров, Божидар", role: "Учител", password: "BT2345"},  
-{name: "Терпо, Янилия", role: "Учител", password: "QT0123"}, 
+{
+  name: "Русинова, Димитрина",
+  displayName: "Димитрина Русинова",
+  role: "Учител",
+  password: "DR1234",
+  avatar: "DR3.jpg",
+  bio: "Дългогодишен преподавател е в ППМГ 'Акад. Н. Обрешков'. Създала е най-успешните олимпийци на гимназията по история. Изключително амбициозен и всеотдаен учител, сред чиито ученици има не един или двама лауреати на НОИ."
+}, 
+{
+  name: "Тодоров, Божидар",
+  displayName: "Божидар Тодоров",
+  role: "Учител",
+  password: "BT2345",
+  avatar: "bozhidar2.jpg",
+  bio: "Създател на 'Под знака на клио'. Преподавател по история. Лауреат на НОИ."
+},    
+{
+  name: "Терпо, Янилия",
+  displayName: "Янилия Терпо",
+  role: "Учител",
+  password: "QT0123",
+  avatar: "QT.jpg",
+  bio: "Ученик в IX 'а' клас на ППМГ 'Акад. Н. Обрешков', изявен хуманитарист с високи постижения в историческата наука. Най-голямото от тях е третото й място на националния кръг на Националната олимпиада по История и цивилизации, проведен в град Русе през 2024-та година."
+}, 
 {name: "Попова, Алиса", role: "Учител", password: "AP0012"},  
 {name: "Манолов, Мартин", role: "Ученик", password: "MM3456"},    
 {name: "Стефанова, Велизара", role: "Ученик", password: "VS4567"},   
@@ -649,6 +721,9 @@ if (user.role !== selectedRole || selectedRole === "") { error.textContent = "С
 if (user.name === "Тодоров, Божидар") {  
     document.getElementById("adminPanel").style.display = "block";  
 }  
+window.currentUser = user;
+
+document.getElementById("profile-avatar").src = user.avatar;
 document.getElementById("loginForm").style.display = "none";    
 document.getElementById("siteContent").style.display = "block";    
 document.getElementById("main-content").style.display = "block";    
@@ -708,5 +783,15 @@ function addButton() {
         btn.style.display = isTeacher ? "block" : "none";
     });
     }
+    document.getElementById("profile-btn").onclick = () => {
+    const p = document.getElementById("profilePanel");
+    p.style.display = p.style.display === "block" ? "none" : "block";
+
+    panelAvatar.src = currentUser.avatar;
+    panelName.textContent = currentUser.displayName;
+    panelRole.textContent = "Статут: " + currentUser.role;
+    panelPass.textContent = "Парола: " + currentUser.password;
+    panelBio.textContent = currentUser.bio;
+};
     
 </script>  </body>    </html>  
