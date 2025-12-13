@@ -255,7 +255,7 @@ box-shadow: 0 0 10px #333;
     <header>Под знака на Клио<br><small>Подготовка за Националната олимпиада по История</small></header>  <nav id="sidebar">  <button onclick="showIframe('index.html')">Начало</button>    <button onclick="toggleSubmenu('plan')">План-конспекти</button>
 
 <div id="plan" class="submenu">    
-    <button onclick="openEFrame('новотовреме.jpg')">Урок I</button>    
+    <button onclick="showLes1()">Урок I</button>  
     <button onclick="openEFrame('Стопански.jpg')">Урок II</button>       
     <button onclick="openEFrame('Будители.jpg')">Урок III</button>        
     <button onclick="openEFrame('Училище.jpg')">Урок IV</button>        
@@ -423,7 +423,40 @@ box-shadow: 0 0 10px #333;
         <p class="quote">„Историята помни само победителите.“<br>— Наполеон Бонапарт, император на Франция</p>    
         <p class="question">При откриването на коя сграда княз Фердинанд е освиркан от студенти?</p>    
         <input type="text" id="answer" placeholder="Въведи отговора">    
-        <button class="submit" onclick="checkAnswer()">Подай своя отговор</button>    
+        <button class="submit" onclick="checkAnswer()">Подай своя отговор</button> 
+    </div>  <div id="Les1" style="display:none; line-height:1.6;">
+    <h2 style="text-align:center;">Резюме на Урок I</h2>
+
+    <p><strong>Новото време в Европа</strong><br>Новото време в Европа
+В края на XV век, европейската история влиза в нова епоха - Новото време, или Модерна епоха. Този преход, отбелязан от началото на Ренесанса в Италия и Великите географски открития по света, представлява край на Средновековието. От XVI до XIX век, западноевропейските общества постигат значителен напредък в развитието на светските науки и изкуства. Те модернизират образованието и въвеждат машини в производството. В някои държави, хората извоюват правото на равенство пред закона и участие в управлението. Това превръща поданиците в граждани.
+    </p>
+
+    
+
+    <img src="Ново.jpg" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+
+    <p><strong>Османската империя и българите през XVIII век</strong><br>През XVIII век, Османската империя изостава значително спрямо напредъка на Европа. След пораженията във войните с Австрия и Русия, тя губи територии и авторитета й отслабва. Настъпват времена на беззаконие. Подкупите и своеволията на местните първенци и еничарите подкопават държавния ред. Към края на века, Балканският полуостров е обхванат от кърджалийски (разбойнически) размирици. Редът е възстановен едва през второто десетилетие на XIX век. Въпреки трудностите, европейското влияние над Османската империя не спира да навлиза в държавното преустройство.</p>
+
+    
+
+    <img src="Осман.jpg" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+    
+        <p><strong>Българското Възраждане</strong><br>Новостите в Европа, възприети от империята, оказват добро влияние върху живота на българите.Земеделието, занаятчийството и търговията значително се променят. Много българи натрупват богатство чрез усърдна дейност и допринасят за напредъка не само на своята лична благосъстоятелност, но и за просветата и културата на околната общност. Новото време променя традиционния бит и средновековните разбирания. Модернизацията се отразява благоприятно на духовния живот, като все повече се засилва интересът към знанията за родното минало и език.</p>
+
+    
+
+    <img src="БВ.jpg" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+    
+    <p><strong>Танзиматът</strong><br>За да преодолее кризата и да спаси империята от разруха, османското управление е принудено да въведе реформи (обществени промени чрез закони). Султан Махмуд II (1808 – 1839) премахва бутуващия се еничарски корпус (основен елемент от армията) и го заменя с редовна войска по европейски образец. Подобрения са извършени в държавното управление и правосъдието.</p>
+
+    <img src="Танз.jpg" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+    
+    <p><strong>Източният въпрос и Кримската криза</strong><br>През ХIХ век Русия продължава да е основен съперник на Османската империя и да покровителства православните християни на Балканите. В конфликтите помежду им активно се намесват и западните държави. Те не желаят разширяване на руското влияние на Балканите (към Цариград и Проливите).Конкуренцията между великите сили за контрол над западащата Османска империя и освободителните борби на балканските народи създават сложни противоречия, наречени Източен въпрос.</p>
+
+    
+
+    <img src="Кром.png" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+</div>   
     </div>  <div id="creators" style="display:none; line-height:1.6;">
     <h2 style="text-align:center;">За създателите</h2>
 
@@ -498,6 +531,7 @@ function showIframe(page) {
     mainContent.style.display = 'none';  
     literature.style.display = 'none';  
     advice.style.display = 'none';  
+    Les1.style.display = 'none';    
     creators.style.display = 'none'; // ← ВАЖНО
     iframeContainer.style.display = 'block';  
 
@@ -517,6 +551,7 @@ mainContent.style.display = 'none';
 iframeContainer.style.display = 'none';    
 advice.style.display = 'none';  
 creators.style.display = 'none'; // ← ВАЖНО
+Les1.style.display = 'none';    
 literature.style.display = 'block';    
 }    
     
@@ -525,6 +560,7 @@ mainContent.style.display = 'none';
 iframeContainer.style.display = 'none';    
 literature.style.display = 'none'; 
 creators.style.display = 'none'; // ← ВАЖНО
+Les1.style.display = 'none';    
 advice.style.display = 'block';    
 }    
 const creators = document.getElementById("creators");
@@ -534,7 +570,18 @@ function showCreators() {
     iframeContainer.style.display = 'none';
     advice.style.display = 'none';
     literature.style.display = 'none';
+    Les1.style.display = 'none';    
     creators.style.display = 'block';
+}
+const Les1 = document.getElementById("Les1");
+function showLes1() {
+    mainContent.style.display = 'none';
+    iframeContainer.style.display = 'none';
+    advice.style.display = 'none';
+    literature.style.display = 'none';
+    creators.style.display = 'none';
+
+    Les1.style.display = 'block';
 }
     
 function checkAnswer() {    
