@@ -498,6 +498,7 @@ function showIframe(page) {
     mainContent.style.display = 'none';  
     literature.style.display = 'none';  
     advice.style.display = 'none';  
+    creators.style.display = 'none'; // ← ВАЖНО
     iframeContainer.style.display = 'block';  
 
     if (page.toLowerCase().endsWith(".jpg") || page.toLowerCase().endsWith(".png")) {  
@@ -514,14 +515,16 @@ function openEFrame(url) { showIframe(url); }
 function showLiterature() {    
 mainContent.style.display = 'none';    
 iframeContainer.style.display = 'none';    
-advice.style.display = 'none';    
+advice.style.display = 'none';  
+creators.style.display = 'none'; // ← ВАЖНО
 literature.style.display = 'block';    
 }    
     
 function showAdvice() {    
 mainContent.style.display = 'none';    
 iframeContainer.style.display = 'none';    
-literature.style.display = 'none';    
+literature.style.display = 'none'; 
+creators.style.display = 'none'; // ← ВАЖНО
 advice.style.display = 'block';    
 }    
 const creators = document.getElementById("creators");
