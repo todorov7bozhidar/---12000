@@ -634,17 +634,65 @@ function showLes1() {
 
     Les1.style.display = 'block';
 }
-    
-function checkAnswer() {    
-const input = document.getElementById('answer');    
-if (input.value.trim().toLowerCase() === "народния театър" || input.value.trim().toLowerCase() === "народен театър") {    
-input.style.borderColor = "green";    
-input.style.backgroundColor = "#003300";    
-} else {    
-input.style.borderColor = "red";    
-input.style.backgroundColor = "#330000";    
-}    
-}    
+
+function checkAnswer() {
+    const input = document.getElementById("answer");
+    const user = currentUser.name;
+
+    const data = JSON.parse(localStorage.getItem("dailyQuestion"));
+    if (!data) return;
+
+    let answered = JSON.parse(localStorage.getItem("answeredUsers")) || [];
+    if (answered.includes(user)) {
+        alert("Вече си отговорил днес.");
+        return;
+    }
+
+    let stats = JSON.parse(localStorage.getItem("stats")) || {};
+    if (!stats[user]) stats[user] = { correct: 0, wrong: 0 };
+
+    if (data.answers.includes(input.value.trim().toLowerCase())) {
+        stats[user].correct++;
+        input.style.borderColor = "green";
+    } else {
+        stats[user].wrong++;
+        input.style.borderColor = "red";
+    }
+
+    answered.push(user);
+
+    localStorage.setItem("stats", JSON.stringify(stats));
+    localStorage.setItem("answeredUsers", JSON.stringify(answered));
+}
+function loadDailyQuestion() {
+    const data = JSON.parse(localStorage.getItem("dailyQuestion"));
+    if (!data) return;
+
+    document.querySelector(".question").textContent = data.question;
+}
+function saveDailyQuestion() {
+    const q = document.getElementById("dq-question").value.trim();
+    const a = document.getElementById("dq-answers").value
+                .toLowerCase()
+                .split(",")
+                .map(x => x.trim());
+
+    if (!q || a.length === 0) {
+        dq-msg.textContent = "Попълни всичко.";
+        return;
+    }
+
+    const data = {
+        question: q,
+        answers: a,
+        date: new Date().toDateString()
+    };
+
+    localStorage.setItem("dailyQuestion", JSON.stringify(data));
+    localStorage.removeItem("answeredUsers"); // НУЛИРАМЕ ДЕНЯ
+
+    document.getElementById("dq-msg").textContent = "Въпросът е зададен.";
+}
     
 /* ===================== Потребители / Логин ===================== */    
 const users = [    
@@ -723,11 +771,14 @@ error.textContent = "";
 const user = users.find(u => u.name === name);    
 if (!user) { error.textContent = "Сгрешено потребителско име!"; return; }    
 if (user.password !== pass) { error.textContent = "Сгрешена парола!"; return; }    
-if (user.role !== selectedRole || selectedRole === "") { error.textContent = "Сгрешен статут!"; return; }    
-  // Ако потребителят е Тодоров, Божидар → показваме админ панела  
-if (user.name === "Тодоров, Божидар") {  
-    document.getElementById("adminPanel").style.display = "block";  
-}  
+if (user.role !== selectedRole || selectedRole === "") { error.textContent = "Сгрешен статут!"; return; }  
+if (user.role === "Ученик") {
+    loadDailyQuestion();
+}
+  // Ако потребителят е Тодоров, Божидар → показваме админ панела 
+if (user.name === "Тодоров, Божидар") {
+    document.getElementById("dailyQuestionAdmin").style.display = "block";
+    }
 window.currentUser = user;
 
 document.getElementById("profile-avatar").src = user.avatar;
