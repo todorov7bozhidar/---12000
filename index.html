@@ -461,7 +461,15 @@ box-shadow: 0 0 10px #333;
  </div> 
  </div>
 <!-- ===================== КРАЙ НА ДОБАВКАТА ===================== -->  <button onclick="showAdvice()">Съвети за олимпиадата</button>  
-<button>Календар</button>  
+<button onclick="showLiterature()">Календар</button>
+        <div id="literature" style="display:none;">    
+<h2>Препоръчителна литература</h2>    
+<p>Павлов, Спасов — <em>300 неща от българската история, които всеки трябва да знае</em></p>    
+<p>Цанев — <em>Български хроники, том 2</em></p>    
+<p>Цанев — <em>Български хроники, том 3</em></p>    
+<p>Баева, И., Е. Калинова. Следвоенно-то десетилетие на българската външ на политика 1944-1955 г. С.. 2013.</p>    
+<p>Митев — <em>Лекционен курс по Българското Възраждане</em></p>    
+</div>    
 <button onclick="showUsers()">Потребители</button>  </nav>  <main id="content">    
     <div id="main-content">    
         <p class="quote">„Историята помни само победителите.“<br>— Наполеон Бонапарт, император на Франция</p>    
@@ -583,7 +591,8 @@ function showIframe(page) {
     literature.style.display = 'none';  
     advice.style.display = 'none';  
     Les1.style.display = 'none';    
-    creators.style.display = 'none'; // ← ВАЖНО
+    creators.style.display = 'none'; 
+    Chronic.style.display = 'none';// ← ВАЖНО
     iframeContainer.style.display = 'block';  
 
     if (page.toLowerCase().endsWith(".jpg") || page.toLowerCase().endsWith(".png")) {  
@@ -605,13 +614,23 @@ creators.style.display = 'none'; // ← ВАЖНО
 Les1.style.display = 'none';    
 literature.style.display = 'block';    
 }    
+function showChronic() {    
+mainContent.style.display = 'none';    
+iframeContainer.style.display = 'none';    
+advice.style.display = 'none';  
+creators.style.display = 'none'; // ← ВАЖНО
+Les1.style.display = 'none';    
+literature.style.display = 'none';  
+Chronic.style.display = 'block';    
+}   
     
 function showAdvice() {    
 mainContent.style.display = 'none';    
 iframeContainer.style.display = 'none';    
 literature.style.display = 'none'; 
 creators.style.display = 'none'; // ← ВАЖНО
-Les1.style.display = 'none';    
+Les1.style.display = 'none';
+Chronic.style.display = 'none';
 advice.style.display = 'block';    
 }    
 const creators = document.getElementById("creators");
@@ -621,7 +640,8 @@ function showCreators() {
     iframeContainer.style.display = 'none';
     advice.style.display = 'none';
     literature.style.display = 'none';
-    Les1.style.display = 'none';    
+    Les1.style.display = 'none'; 
+    Chronic.style.display = 'none';
     creators.style.display = 'block';
 }
 const Les1 = document.getElementById("Les1");
@@ -630,6 +650,7 @@ function showLes1() {
     iframeContainer.style.display = 'none';
     advice.style.display = 'none';
     literature.style.display = 'none';
+    Chronic.style.display = 'none';
     creators.style.display = 'none';
 
     Les1.style.display = 'block';
