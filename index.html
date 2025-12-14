@@ -465,7 +465,7 @@ box-shadow: 0 0 10px #333;
 <button onclick="showUsers()">Потребители</button>  </nav>  <main id="content">    
     <div id="main-content">    
         <p class="quote">„Историята помни само победителите.“<br>— Наполеон Бонапарт, император на Франция</p>    
-        <p class="question">При откриването на коя сграда княз Фердинанд е освиркан от студенти?</p>    
+        <div id="dailyQuestionAdmin"></div>    
         <input type="text" id="answer" placeholder="Въведи отговора">    
         <button class="submit" onclick="checkAnswer()">Подай своя отговор</button> 
     </div>  <div id="Les1" style="display:none; line-height:1.6;">
@@ -779,7 +779,7 @@ if (user.role === "Ученик") {
 if (user.name === "Тодоров, Божидар") {
     document.getElementById("dailyQuestionAdmin").style.display = "block";
     }
-const admin = document.getElementById("dailyQuestionAdmin");
+    const admin = document.getElementById("dailyQuestionAdmin");
 if (admin) admin.style.display = "block";
 window.currentUser = user;
 
