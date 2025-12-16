@@ -616,6 +616,7 @@ function showIframe(page) {
     advice.style.display = 'none';  
     Les1.style.display = 'none';    
     creators.style.display = 'none'; // ← ВАЖНО
+    Les2.style.display = 'none';
     iframeContainer.style.display = 'block';  
 
     if (page.toLowerCase().endsWith(".jpg") || page.toLowerCase().endsWith(".png")) {  
@@ -634,7 +635,8 @@ mainContent.style.display = 'none';
 iframeContainer.style.display = 'none';    
 advice.style.display = 'none';  
 creators.style.display = 'none'; // ← ВАЖНО
-Les1.style.display = 'none';    
+Les1.style.display = 'none';  
+Les2.style.display = 'none';
 literature.style.display = 'block';    
 }    
     
@@ -643,7 +645,8 @@ mainContent.style.display = 'none';
 iframeContainer.style.display = 'none';    
 literature.style.display = 'none'; 
 creators.style.display = 'none'; // ← ВАЖНО
-Les1.style.display = 'none';    
+Les1.style.display = 'none';  
+Les2.style.display = 'none';
 advice.style.display = 'block';    
 }    
 const creators = document.getElementById("creators");
@@ -653,7 +656,8 @@ function showCreators() {
     iframeContainer.style.display = 'none';
     advice.style.display = 'none';
     literature.style.display = 'none';
-    Les1.style.display = 'none';    
+    Les1.style.display = 'none'; 
+    Les2.style.display = 'none';
     creators.style.display = 'block';
 }
 const Les1 = document.getElementById("Les1");
@@ -663,11 +667,11 @@ function showLes1() {
     advice.style.display = 'none';
     literature.style.display = 'none';
     creators.style.display = 'none';
-
+    Les2.style.display = 'none';
     Les1.style.display = 'block';
 }
 const Les2 = document.getElementById("Les1");
-function showLes1() {
+function showLes2() {
     mainContent.style.display = 'none';
     iframeContainer.style.display = 'none';
     advice.style.display = 'none';
