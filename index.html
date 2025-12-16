@@ -296,7 +296,7 @@ box-shadow: 0 0 10px #333;
     <button id="profile-btn">
     <img id="profile-avatar" src="default.jpg" alt="profile">
     </button>
-    <header>Под знака на Клио<br><small>Vive l'histoire</small></header>  <nav id="sidebar">  <button onclick="showIframe('index.html')">Начало</button>    <button onclick="toggleSubmenu('plan')">План-конспекти</button>
+    <header>Под знака на Клио<br><small>Vive l'histoire</small></header>  <nav id="sidebar">  <button onclick="showIframe('index.html')">Начало</button>    <button onclick="toggleSubmenu('plan')">Резюмета</button>
 
 <div id="plan" class="submenu">    
     <button onclick="showLes1()">Урок I</button>  
@@ -309,7 +309,13 @@ box-shadow: 0 0 10px #333;
     <button>Урок VIII</button>    
     <button>Урок IX</button>    
     <button>Урок X</button>    
-</div>    <button onclick="toggleSubmenu('textbooks')">Учебници</button>
+</div>   
+     <button onclick="toggleSubmenu('conspects')">План-конспекти</button>
+
+<div id="plan" class="submenu">            
+    <button onclick="openEFrame('Урок3ти.jpg')">Урок III</button>        
+    <button onclick="openEFrame('Хронос.jpg')">Дати към Урок III</button>             
+        <button onclick="toggleSubmenu('textbooks')">Учебници</button>
 
 <div id="textbooks" class="submenu">    
     <button onclick="openEFrame('https://ebooks.presveta.bg/7klas')">Просвета VII</button>    
