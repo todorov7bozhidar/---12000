@@ -300,12 +300,12 @@ box-shadow: 0 0 10px #333;
 
 <div id="plan" class="submenu">    
     <button onclick="showLes1()">Урок I</button>  
-    <button onclick="openEFrame('Стопански.jpg')">Урок II</button>       
+    <button onclick="showLes2()">Урок II</button>       
     <button onclick="openEFrame('Будители.jpg')">Урок III</button>        
     <button onclick="openEFrame('Училище.jpg')">Урок IV</button>        
     <button onclick="showIframe('05. Светът на възрожденските българи.pdf')">Урок V</button>    
     <button>Урок VI</button>    
-    <button onclick="openEFrame('Движение.jpg')">Урок VII</button>       
+    <button>Урок VII</button>    
     <button>Урок VIII</button>    
     <button>Урок IX</button>    
     <button>Урок X</button>    
@@ -501,6 +501,38 @@ box-shadow: 0 0 10px #333;
 
     <img src="Кром.png" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
 </div>   
+    </div>  <div id="Les2" style="display:none; line-height:1.6;">
+    <h2 style="text-align:center;">Резюме на Урок II</h2>
+
+    <p><strong>Земеделието по време на Възраждането</strong><br>Възраждаща се България все още остава предимно земеделска страна. Земята се обработва по традиционни методи, но въпреки това се въвеждат нови техники на добив. Далечни растителни култури като царевицата, тютюна и картофите, внесени от Америка, са отглеждани активно, а райони като Добруджа, Тракия и Подбалканските полета се специализират в производството на пшеница, ориз и маслодайна роза. Организацията на работата също се променя - в стопанствата навлизат прогресивните чифлици, които произвеждат големи количества селскостопанска продукция.</p>
+
+    
+
+    <img src="Земя1.png" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+
+    <p><strong>Фабриките</strong></strong><br>В периода на Възраждането, занаятите достигат върха на своята слава. Традиционните занаяти са все още основният източник, удовлетворяващ нужди от стоки, като сечива, облекло и предмети за бита. Така, с въвеждането на модерната армия и повече чиновници в османската администрация, търсенето на вълнени платове за униформи се увеличава. Най-заможните занаятчии организират нов тип предприятия - манифактури, където различни работници извършват специфични операции. Постепенно се въвеждат и нови машини.</p>
+
+    
+
+    <img src="Фабр.jpg" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+    
+        <p><strong>Търговията</strong><br>Въпреки забавянето на индустриализацията, търговията се развива с бързи темпове. Тя става двигател на видими икономически промени. Чрез увеличеното търсене на суровини в Европа, обменът със Запада става все по-активен. Българите се насочват към търговията и обменят различни стоки по седмичните пазари и панаирите. Някои търговци пътуват из цялата империя и стигат до далечни страни като Египет, Сирия, Ирак и Персия. Други дори се отправят към Западна Европа, доставяйки сурови кожи, необработено желязо, восък, мед и вълна.
+
+Стопанското оживление в българските земи през XVIII и XIX век, свързано с реформите в Османската империя, започва да променя живота на хората. Заможните български производители стават все по-самостоятелни и заможни, доставяйки произведенията добити на родната си земя до най-отдалечените краища на Османската империя и Европа.</p>
+
+    
+
+    <img src="Търг.jpg" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+    
+    <p><strong></strong><br></p>
+    <img src=".jpg" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+    
+    <p><strong></strong><br></p>
+
+    
+
+    <img src=".png" style="width:100%; height:auto; margin-top:10px; border-radius:12px;">
+</div>   
     </div>  <div id="creators" style="display:none; line-height:1.6;">
     <h2 style="text-align:center;">За създателите</h2>
 
@@ -634,6 +666,16 @@ function showLes1() {
 
     Les1.style.display = 'block';
 }
+const Les2 = document.getElementById("Les1");
+function showLes1() {
+    mainContent.style.display = 'none';
+    iframeContainer.style.display = 'none';
+    advice.style.display = 'none';
+    literature.style.display = 'none';
+    creators.style.display = 'none';
+    Les1.style.display = 'none';
+    Les2.style.display = 'block';
+}
     
 function checkAnswer() {    
 const input = document.getElementById('answer');    
@@ -662,7 +704,7 @@ const users = [
   role: "Учител",
   password: "BT2345",
   avatar: "bozhidar2.jpg",
-  bio: "Създател на 'Под знака на Клио'. Преподавател по история в ППМГ 'Акад. Н. Обрешков'. Лауреат на НОИ от националния кръг във Варна."
+  bio: "Създател на 'Под знака на Клио'. Лауреат на НОИ от националния кръг във Варна."
 },    
 {
   name: "Терпо, Янилия",
@@ -680,6 +722,7 @@ const users = [
   avatar: "Alis3.jpg",
   bio: "Преподавател по ИТ в ППМГ 'Акад. Н. Обрешков'."
 },     
+{name: "Статева, Гергана", role: "Учител", password: "GS0001"},    
 {name: "Манолов, Мартин", role: "Ученик", password: "MM3456"},    
 {name: "Стефанова, Велизара", role: "Ученик", password: "VS4567"},   
 {name: "Топалски, Борис", role: "Ученик", password: "BT5678"},
