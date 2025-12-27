@@ -1697,27 +1697,32 @@ function showIframe(page) {
     const iframe = document.getElementById('iframe');
     iframeContainer.style.display = 'block';
     
-    // Определяне типа на файла и избор на подходящ viewer
-    const fileExtension = page.split('.').pop().toLowerCase();
-    
-    if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
-        // Изображения
-        iframe.src = page;
-    } else if (fileExtension === 'pdf') {
-        // PDF файлове - Google Docs viewer
+    // ⭐ НОВИЯТ КОД (както в indexTR.html):
+    if (page.toLowerCase().endsWith(".jpg") || 
+        page.toLowerCase().endsWith(".jpeg") || 
+        page.toLowerCase().endsWith(".png") || 
+        page.toLowerCase().endsWith(".gif") || 
+        page.toLowerCase().endsWith(".bmp") || 
+        page.toLowerCase().endsWith(".webp")) {  
+        
+        // Изображенията се отварят през image_viewer.html
+        iframe.src = `image_viewer.html?img=${encodeURIComponent(page)}`;  
+        
+    } else if (page.toLowerCase().endsWith(".pdf")) {
+        // PDF файлове - Google Docs Viewer
         iframe.src = `https://docs.google.com/gview?url=${encodeURIComponent(page)}&embedded=true`;
-    } else if (['doc', 'docx'].includes(fileExtension)) {
-        // Word файлове - Microsoft Office Online
+        
+    } else if (page.toLowerCase().endsWith(".doc") || page.toLowerCase().endsWith(".docx")) {
+        // Word файлове
         iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(page)}`;
-    } else if (['ppt', 'pptx'].includes(fileExtension)) {
-        // PowerPoint файлове - Microsoft Office Online
+        
+    } else if (page.toLowerCase().endsWith(".ppt") || page.toLowerCase().endsWith(".pptx")) {
+        // PowerPoint файлове
         iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(page)}`;
-    } else if (['txt', 'html', 'htm', 'css', 'js', 'json'].includes(fileExtension)) {
-        // Текстови файлове
-        iframe.src = page;
-    } else {
-        // Всичко останало (включително URL адреси)
-        iframe.src = page;
+        
+    } else {  
+        // Всичко останало (HTML, TXT, URL и т.н.)
+        iframe.src = page;  
     }
     
     sidebar.classList.remove('active');
