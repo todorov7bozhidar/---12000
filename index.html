@@ -2420,29 +2420,119 @@ function showIframe(page) {
     // Определяне типа на файла и избор на подходящ viewer
     const fileExtension = page.split('.').pop().toLowerCase();
     
-    if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
-        // Изображения - използваме новия image viewer
-        const imageUrl = encodeURIComponent(page);
-        iframe.src = `image_viewer.html?image=${imageUrl}`;
-    } else if (fileExtension === 'pdf') {
-        // PDF файлове - Google Docs viewer
-        iframe.src = `https://docs.google.com/gview?url=${encodeURIComponent(page)}&embedded=true`;
-    } else if (['doc', 'docx'].includes(fileExtension)) {
-        // Word файлове - Microsoft Office Online
-        iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(page)}`;
-    } else if (['ppt', 'pptx'].includes(fileExtension)) {
-        // PowerPoint файлове - Microsoft Office Online
-        iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(page)}`;
-    } else if (['txt', 'html', 'htm', 'css', 'js', 'json'].includes(fileExtension)) {
-        // Текстови файлове
-        iframe.src = page;
-    } else {
-        // Всичко останало (включително URL адреси)
-        iframe.src = page;
+    // ПРОВЕРКА: Ако това е локален файл (не започва с http/https/data)
+    if (!page.startsWith('http') && !page.startsWith('https') && !page.startsWith('data:')) {
+        // Това е локален файл - използваме директно името на файла
+        // (браузърът ще го търси в същата директория)
+        
+        if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
+            // За изображения: Създаваме прост HTML page за показване
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            background-color: #000;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 100vh;
+                            overflow: hidden;
+                        }
+                        .image-container {
+                            max-width: 100%;
+                            max-height: 100vh;
+                            text-align: center;
+                            color: white;
+                            font-family: Arial, sans-serif;
+                        }
+                        img {
+                            max-width: 100%;
+                            max-height: 100vh;
+                            object-fit: contain;
+                        }
+                        .error-message {
+                            background-color: #222;
+                            padding: 20px;
+                            border-radius: 10px;
+                            border: 2px solid #b22222;
+                            text-align: center;
+                            max-width: 80%;
+                        }
+                        .error-title {
+                            color: #b22222;
+                            font-size: 24px;
+                            margin-bottom: 10px;
+                        }
+                        .error-details {
+                            color: #aaa;
+                            font-size: 14px;
+                            margin-top: 10px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="image-container">
+                        <img src="${page}" alt="Изображение" onerror="
+                            // Показваме съобщение В САМИТЯ IFRAME при грешка
+                            this.style.display = 'none';
+                            const container = document.querySelector('.image-container');
+                            container.innerHTML = '<div class=\"error-message\">' +
+                                '<div class=\"error-title\">❌ Файлът не може да бъде зареден</div>' +
+                                '<div>Файл: <strong>${page}</strong></div>' +
+                                '<div class=\"error-details\">Проверете дали файлът съществува в същата папка като сайта.</div>' +
+                            '</div>';
+                        ">
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            // Записваме HTML директно в iframe
+            iframe.srcdoc = htmlContent;
+        }
+        else if (fileExtension === 'pdf') {
+            // За PDF файлове - използваме Google Docs viewer с пълен URL
+            iframe.src = `https://docs.google.com/gview?url=${window.location.origin + '/' + page}&embedded=true`;
+        }
+        else if (['html', 'htm'].includes(fileExtension)) {
+            // За HTML файлове - зареждаме директно
+            iframe.src = page;
+        }
+        else {
+            // За други файлове показваме в iframe
+            iframe.src = page;
+        }
+    } 
+    else {
+        // Това е уеб URL - използваме стария метод
+        if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
+            // Изображения - използваме новия image viewer
+            const imageUrl = encodeURIComponent(page);
+            iframe.src = `image_viewer.html?image=${imageUrl}`;
+        } else if (fileExtension === 'pdf') {
+            // PDF файлове - Google Docs viewer
+            iframe.src = `https://docs.google.com/gview?url=${encodeURIComponent(page)}&embedded=true`;
+        } else if (['doc', 'docx'].includes(fileExtension)) {
+            // Word файлове - Microsoft Office Online
+            iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(page)}`;
+        } else if (['ppt', 'pptx'].includes(fileExtension)) {
+            // PowerPoint файлове - Microsoft Office Online
+            iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(page)}`;
+        } else if (['txt', 'html', 'htm', 'css', 'js', 'json'].includes(fileExtension)) {
+            // Текстови файлове
+            iframe.src = page;
+        } else {
+            // Всичко останало (включително URL адреси)
+            iframe.src = page;
+        }
     }
     
     sidebar.classList.remove('active');
-}
+    }
 
 function openEFrame(url) {
     showIframe(url);
