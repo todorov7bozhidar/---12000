@@ -2555,6 +2555,88 @@ function showIframe(page) {
                                 <div class="error-title">❌ Грешка при зареждане</div>
                                 <div class="error-details">Файлът не може да бъде отворен</div>
                             </div>
+ 
+function showIframe(page) {
+    hideAllSections();
+    const iframeContainer = document.getElementById('iframe-container');
+    const iframe = document.getElementById('iframe');
+    iframeContainer.style.display = 'block';
+    
+    // Определяне типа на файла
+    const fileExtension = page.split('.').pop().toLowerCase();
+    
+    // ПРОВЕРКА: Ако това е локален файл
+    if (!page.startsWith('http') && !page.startsWith('https') && !page.startsWith('data:')) {
+        
+        if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
+            // За изображения: създаваме HTML с два режима
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            background-color: #000;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 100vh;
+                            overflow: hidden;
+                        }
+                        .image-container {
+                            max-width: 100%;
+                            max-height: 100vh;
+                            text-align: center;
+                        }
+                        img {
+                            max-width: 100%;
+                            max-height: 100vh;
+                            object-fit: contain;
+                        }
+                        .error-message {
+                            background-color: #222;
+                            padding: 20px;
+                            border-radius: 10px;
+                            border: 2px solid #b22222;
+                            text-align: center;
+                            max-width: 80%;
+                            color: white;
+                            font-family: Arial, sans-serif;
+                        }
+                        .error-title {
+                            color: #b22222;
+                            font-size: 24px;
+                            margin-bottom: 10px;
+                        }
+                        .error-details {
+                            color: #aaa;
+                            font-size: 14px;
+                            margin-top: 10px;
+                        }
+                        .hidden {
+                            display: none !important;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div id="content-container">
+                        <!-- Тук ще се покаже ИЛИ изображението ИЛИ грешката -->
+                        <div id="image-wrapper" style="display: none;">
+                            <img id="main-image" src="${page}" alt="Изображение" 
+                                 onload="document.getElementById('error-wrapper').style.display='none';"
+                                 onerror="
+                                    document.getElementById('image-wrapper').style.display='none';
+                                    document.getElementById('error-wrapper').style.display='block';
+                                 ">
+                        </div>
+                        
+                        <div id="error-wrapper" style="display: none;">
+                            <div class="error-message">
+                                <div class="error-title">❌ Грешка при зареждане</div>
+                                <div class="error-details">Файлът не може да бъде отворен</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -2612,7 +2694,6 @@ function showIframe(page) {
     
     sidebar.classList.remove('active');
     }
-
 function openEFrame(url) {
     showIframe(url);
 }
