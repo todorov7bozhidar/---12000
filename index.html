@@ -2474,19 +2474,110 @@ function showIframe(page) {
                         }
                     </style>
                 </head>
+function showIframe(page) {
+    hideAllSections();
+    const iframeContainer = document.getElementById('iframe-container');
+    const iframe = document.getElementById('iframe');
+    iframeContainer.style.display = 'block';
+    
+    // Определяне типа на файла
+    const fileExtension = page.split('.').pop().toLowerCase();
+    
+    // ПРОВЕРКА: Ако това е локален файл
+    if (!page.startsWith('http') && !page.startsWith('https') && !page.startsWith('data:')) {
+        
+        if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
+            // За изображения: създаваме HTML с два режима
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            background-color: #000;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 100vh;
+                            overflow: hidden;
+                        }
+                        .image-container {
+                            max-width: 100%;
+                            max-height: 100vh;
+                            text-align: center;
+                        }
+                        img {
+                            max-width: 100%;
+                            max-height: 100vh;
+                            object-fit: contain;
+                        }
+                        .error-message {
+                            background-color: #222;
+                            padding: 20px;
+                            border-radius: 10px;
+                            border: 2px solid #b22222;
+                            text-align: center;
+                            max-width: 80%;
+                            color: white;
+                            font-family: Arial, sans-serif;
+                        }
+                        .error-title {
+                            color: #b22222;
+                            font-size: 24px;
+                            margin-bottom: 10px;
+                        }
+                        .error-details {
+                            color: #aaa;
+                            font-size: 14px;
+                            margin-top: 10px;
+                        }
+                        .hidden {
+                            display: none !important;
+                        }
+                    </style>
+                </head>
                 <body>
-                    <div class="image-container">
-                        <img src="${page}" alt="Изображение" onerror="
-                            // Показваме съобщение В САМИТЯ IFRAME при грешка
-                            this.style.display = 'none';
-                            const container = document.querySelector('.image-container');
-                            container.innerHTML = '<div class=\"error-message\">' +
-                                '<div class=\"error-title\">❌ Файлът не може да бъде зареден</div>' +
-                                '<div>Файл: <strong>${page}</strong></div>' +
-                                '<div class=\"error-details\">Проверете дали файлът съществува в същата папка като сайта.</div>' +
-                            '</div>';
-                        ">
+                    <div id="content-container">
+                        <!-- Тук ще се покаже ИЛИ изображението ИЛИ грешката -->
+                        <div id="image-wrapper" style="display: none;">
+                            <img id="main-image" src="${page}" alt="Изображение" 
+                                 onload="document.getElementById('error-wrapper').style.display='none';"
+                                 onerror="
+                                    document.getElementById('image-wrapper').style.display='none';
+                                    document.getElementById('error-wrapper').style.display='block';
+                                 ">
+                        </div>
+                        
+                        <div id="error-wrapper" style="display: none;">
+                            <div class="error-message">
+                                <div class="error-title">❌ Грешка при зареждане</div>
+                                <div class="error-details">Файлът не може да бъде отворен</div>
+                            </div>
+                        </div>
                     </div>
+                    
+                    <script>
+                        // Първо проверяваме дали изображението може да се зареди
+                        const img = document.getElementById('main-image');
+                        
+                        // Ако вече е заредено успешно
+                        if (img.complete && img.naturalHeight !== 0) {
+                            document.getElementById('image-wrapper').style.display = 'block';
+                            document.getElementById('error-wrapper').style.display = 'none';
+                        } else {
+                            // Ако все още не е заредено, изчакваме
+                            img.onload = function() {
+                                document.getElementById('image-wrapper').style.display = 'block';
+                                document.getElementById('error-wrapper').style.display = 'none';
+                            };
+                            img.onerror = function() {
+                                document.getElementById('image-wrapper').style.display = 'none';
+                                document.getElementById('error-wrapper').style.display = 'block';
+                            };
+                        }
+                    <\/script>
                 </body>
                 </html>
             `;
@@ -2495,38 +2586,26 @@ function showIframe(page) {
             iframe.srcdoc = htmlContent;
         }
         else if (fileExtension === 'pdf') {
-            // За PDF файлове - използваме Google Docs viewer с пълен URL
-            iframe.src = `https://docs.google.com/gview?url=${window.location.origin + '/' + page}&embedded=true`;
+            // За PDF файлове
+            iframe.src = page;
         }
         else if (['html', 'htm'].includes(fileExtension)) {
-            // За HTML файлове - зареждаме директно
+            // За HTML файлове
             iframe.src = page;
         }
         else {
-            // За други файлове показваме в iframe
+            // За други файлове
             iframe.src = page;
         }
     } 
     else {
         // Това е уеб URL - използваме стария метод
         if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
-            // Изображения - използваме новия image viewer
             const imageUrl = encodeURIComponent(page);
             iframe.src = `image_viewer.html?image=${imageUrl}`;
         } else if (fileExtension === 'pdf') {
-            // PDF файлове - Google Docs viewer
             iframe.src = `https://docs.google.com/gview?url=${encodeURIComponent(page)}&embedded=true`;
-        } else if (['doc', 'docx'].includes(fileExtension)) {
-            // Word файлове - Microsoft Office Online
-            iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(page)}`;
-        } else if (['ppt', 'pptx'].includes(fileExtension)) {
-            // PowerPoint файлове - Microsoft Office Online
-            iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(page)}`;
-        } else if (['txt', 'html', 'htm', 'css', 'js', 'json'].includes(fileExtension)) {
-            // Текстови файлове
-            iframe.src = page;
         } else {
-            // Всичко останало (включително URL адреси)
             iframe.src = page;
         }
     }
